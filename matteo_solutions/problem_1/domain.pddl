@@ -1,55 +1,67 @@
 (define (domain injured-people-environment)
     (:requirements :typing :equality :negative-preconditions :existential-preconditions)
     (:types
-        Loc
-        Person
-        Resource
-        Crate
-        Robot
+        loc
+        person
+        food medicine - crate
+        robot
     ) 
-    (:constants FOOD MEDICINE - Resource)
+    (:constants agent - robot)
     (:predicates 
-        (Injured ?p)
+        (injured ?p)
+        
         ; localization predicates
-        (At ?x ?l) ; entity x (Robot, Crate, Person) is at Location l
+        (robot-at ?r - robot ?l - loc)
+        (person-at ?p - person ?l - loc)
+        (crate-at ?c - crate ?l - loc)
+        
         ; action-based predicates
-        (Has ?x ?o)
-        (Free ?r)
-        (Carrying ?r ?c) ; Robot r is carrying Crate c
-        (Taken ?c) ; Crate c is taken (cannot be Loaded)
+        (has-crate ?p - person ?c - crate) ; person p has crate c
+        (carrying ?r ?c) ; robot r is carrying crate c
+
+        ; predicates expressing intrinsic properties of entities
+        (free ?r) ; robot r is free, meaning it is not carrying any crate
+        (delivered ?c) ; crate c has been delivered (cannot be loaded on a robot)
     )
 
-    ; defining the possible actions of the problem
-    (:action Move ; move the robot ?r from location ?src to location ?dst
-        :parameters (?r - Robot ?src - Loc ?dst - Loc)
+    ; move the robot ?r from location ?src to location ?dst
+    (:action Move
+        :parameters (?r - robot ?src ?dst - loc)
         :precondition (and
             ; actual action constraints
-            (At ?r ?src) (not (= ?src ?dst))
+            (robot-at ?r ?src) (not (= ?src ?dst))
         )
         :effect (and 
-            (not (at ?r ?src))
-            (at ?r ?dst)
+            (not (robot-at ?r ?src)) ; robot is not at the source location anymore
+            (robot-at ?r ?dst) ; robot is at the destination location after moving
         )
     
     )
-    (:action Load ; load the Crate ?c onto Robot ?r at Location ?l
-        :parameters (?r - Robot ?c - Crate ?l - Loc)
+
+    ; load the crate ?c onto robot ?r at location ?l
+    (:action Load 
+        :parameters (?r - robot ?c - crate ?l - loc)
         :precondition (and 
-            ; actual action constraints
-            (At ?r ?l) (At ?c ?l) (not (Carrying ?r ?c)) (not (Taken ?c)) (Free ?r)
+            (robot-at ?r ?l) (crate-at ?c ?l) ; location constraints
+            (not (carrying ?r ?c)) (free ?r) ; ensure the robot can load the crate
+            (not (delivered ?c)) ; ensure the crate can be loaded onto the robot
         )
         :effect (and 
-            (Carrying ?r ?c) (not (Free ?r))
+            (carrying ?r ?c) (not (free ?r)) ; the robot is actually holding the crate, so it is not free anymore
         )
     )
-    (:action Unload ; deliver the content of Crate ?c to Person ?p from Robot ?r when at the same Location ?l
-        :parameters (?r - Robot ?c - Crate ?p - Person ?l - Loc)
+
+    ; deliver the content of crate ?c to person ?p from robot ?r when at the same location ?l
+    (:action Unload
+        :parameters (?r - robot ?c - crate ?p - person ?l - loc)
         :precondition (and 
-            ; actual action constraints
-            (At ?r ?l) (Carrying ?r ?c) (At ?p ?l)
+            (robot-at ?r ?l) (person-at ?p ?l) ; location constraints
+            (carrying ?r ?c) ; make sure we are not trying to unload a crate we don't have!
         )
         :effect (and 
-            (not (Carrying ?r ?c)) (Free ?r) (Has ?p ?c) (At ?c ?l) (Taken ?c)
+            (not (carrying ?r ?c)) (free ?r) ; the robot is not carrying the crate anymore, so it is free
+            (has-crate ?p ?c) (crate-at ?c ?l) ; the crate has been delivered to the person, so it is his/hers property at the same loc.
+            (delivered ?c) ; since the person needs the content of the crate, it cannot be reused. So, mark it as delivered.
         )
     )
 )
