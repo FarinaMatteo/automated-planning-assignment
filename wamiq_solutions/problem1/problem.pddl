@@ -1,24 +1,25 @@
 (define (problem delivery-problems)
   (:domain delivery)
   (:objects 
-  
+      
+      ; declaration of location and assuming person at particular location
       depot loc_1 loc_2 loc_3 loc_4 loc_5 loc_6 loc_7 loc_8 loc_9 loc_10 loc_11 loc_12 loc_13 loc_14 loc_15 
       loc_16 loc_17 loc_18 loc_19 loc_20 loc_21 loc_22 loc_23 loc_24 loc_25 loc_26 loc_27 loc_28 loc_29 loc_30 
       loc_31 loc_32 loc_33 loc_34 loc_35 loc_36 loc_37 loc_38 loc_39 loc_40 loc_41 loc_42 loc_43 loc_44 loc_45 
       loc_46 loc_47 loc_48 loc_49 loc_50 
   
-	    ;Crate for food and medicines
-	    
-	    crate_1 crate_2 crate_3 crate_4 crate_5 crate_6 crate_7 crate_8 crate_9 crate_10 crate_11 crate_12 crate_13 crate_14 crate_15 
-	    crate_16 crate_17 crate_18 crate_19 crate_20 crate_21 crate_22 crate_23 crate_24 crate_25 crate_26 crate_27 crate_28 
-	    crate_29 crate_30 crate_31 crate_32 crate_33 crate_34 crate_35 crate_36 crate_37 crate_38 crate_39 crate_40 crate_41 
-	    crate_42 crate_43 crate_44 crate_45 crate_46 crate_47 crate_48 crate_49 crate_50 
+	;Crate for food and medicines
+	crate_1 crate_2 crate_3 crate_4 crate_5 crate_6 crate_7 crate_8 crate_9 crate_10 crate_11 crate_12 crate_13 crate_14 crate_15 
+	crate_16 crate_17 crate_18 crate_19 crate_20 crate_21 crate_22 crate_23 crate_24 crate_25 crate_26 crate_27 crate_28 
+	crate_29 crate_30 crate_31 crate_32 crate_33 crate_34 crate_35 crate_36 crate_37 crate_38 crate_39 crate_40 crate_41 
+	crate_42 crate_43 crate_44 crate_45 crate_46 crate_47 crate_48 crate_49 crate_50 
 	
-	    right
+	right
   )
 	    
   (:init 
-  
+
+        ; location intialization 
         (LOC depot)(LOC loc_1) (LOC loc_2) (LOC loc_3) (LOC loc_4) (LOC loc_5) (LOC loc_6) (LOC loc_7) (LOC loc_8) (LOC loc_9) 
         (LOC loc_10) (LOC loc_11) (LOC loc_12) (LOC loc_13) (LOC loc_14) (LOC loc_15) (LOC loc_16) (LOC loc_17) (LOC loc_18) (LOC loc_19)
         (LOC loc_20) (LOC loc_21) (LOC loc_22) (LOC loc_23) (LOC loc_24) (LOC loc_25) (LOC loc_26) (LOC loc_27) (LOC loc_28) (LOC loc_29)
@@ -26,6 +27,7 @@
         (LOC loc_40) (LOC loc_41) (LOC loc_42) (LOC loc_43) (LOC loc_44) (LOC loc_45) (LOC loc_46) (LOC loc_47) (LOC loc_48) (LOC loc_49)
         (LOC loc_50) 
         
+        ; crate intialization 
         (CRATE crate_1) (CRATE crate_2) (CRATE crate_3) (CRATE crate_4) (CRATE crate_5) (CRATE crate_6) (CRATE crate_7) (CRATE crate_8) 
         (CRATE crate_9) (CRATE crate_10) (CRATE crate_11) (CRATE crate_12) (CRATE crate_13) (CRATE crate_14) (CRATE crate_15)
         (CRATE crate_16) (CRATE crate_17) (CRATE crate_18) (CRATE crate_19) (CRATE crate_20) (CRATE crate_21) (CRATE crate_22)
@@ -37,6 +39,7 @@
         (AGENT right) 
         (free right) (at-rob depot)
         
+        ; Intially all crate at depot
         (at-crate crate_1 depot) (at-crate crate_2 depot) (at-crate crate_3 depot) (at-crate crate_4 depot) (at-crate crate_5 depot) 
         (at-crate crate_6 depot) (at-crate crate_7 depot) (at-crate crate_8 depot) (at-crate crate_9 depot) (at-crate crate_10 depot) 
         (at-crate crate_11 depot) (at-crate crate_12 depot) (at-crate crate_13 depot) (at-crate crate_14 depot) (at-crate crate_15 depot) 
