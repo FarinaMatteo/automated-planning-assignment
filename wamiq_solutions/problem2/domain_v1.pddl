@@ -1,10 +1,10 @@
-(define (domain logistics)
+(define (domain delivery)
   (:requirements :strips :typing) 
   (:types carrier
           agent - vehicle
           crate
           vehicle - physobj
-          airport
+          base
           location - place
           city
           place 
@@ -42,7 +42,7 @@
    (and (not (at ?carrier ?loc-from)) (at ?carrier ?loc-to)))
 
 (:action FLY-AGENT
-  :parameters (?agent - agent ?loc-from - airport ?loc-to - airport)
+  :parameters (?agent - agent ?loc-from - base ?loc-to - base)
   :precondition
    (at ?agent ?loc-from)
   :effect
