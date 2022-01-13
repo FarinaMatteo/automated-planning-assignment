@@ -1,0 +1,92 @@
+set instance agent robot
+set instance depot warehouse
+set instance food resource
+set instance medicine resource
+
+set instance l0 loc
+set instance l1 loc
+set instance l2 loc
+set instance l3 loc
+set instance l4 loc
+set instance l5 loc
+set instance l6 loc
+set instance l7 loc
+set instance l8 loc
+set instance l9 loc
+
+set instance alice person
+set instance wamiq person
+set instance zihadul person
+set instance matteo person
+set instance federico person
+set instance gianmarco person
+
+set instance f0 crate
+set instance f1 crate
+set instance f2 crate
+set instance m3 crate
+set instance m4 crate
+set instance m5 crate
+
+set instance carr carrier
+
+set instance n0 zero_quantity
+set instance n1 non_zero_quantity
+set instance n2 non_zero_quantity
+set instance n3 non_zero_quantity
+set instance n4 non_zero_quantity
+
+set predicate (person_at wamiq l5)
+set predicate (person_at zihadul l3)
+set predicate (person_at alice l0)
+set predicate (person_at matteo l3)
+set predicate (person_at federico l9)
+set predicate (person_at gianmarco l7)
+
+set predicate (crate_at f0 depot)
+set predicate (crate_at f1 depot)
+set predicate (crate_at f2 depot)
+set predicate (crate_at m3 depot)
+set predicate (crate_at m4 depot)
+set predicate (crate_at m5 depot)
+
+set predicate (robot_at agent depot)
+set predicate (carrier_at carr depot)
+
+set predicate (crates_amount carr n0)
+set predicate (free agent)
+
+set predicate (inc n0 n1)
+set predicate (inc n1 n2)
+set predicate (inc n2 n3)
+set predicate (inc n3 n4)
+set predicate (dec n4 n3)
+set predicate (dec n3 n2)
+set predicate (dec n2 n1)
+set predicate (dec n1 n0)
+
+set predicate (needs wamiq food)
+set predicate (doesnt_need wamiq medicine)
+
+set predicate (needs matteo medicine)
+set predicate (doesnt_need matteo food)
+
+set predicate (needs zihadul food)
+set predicate (needs zihadul medicine)
+
+set predicate (doesnt_need federico food)
+set predicate (doesnt_need federico medicine)
+set predicate (doesnt_need alice food)
+set predicate (doesnt_need alice medicine)
+
+set predicate (needs gianmarco medicine)
+set predicate (doesnt_need gianmarco food)
+
+set predicate (crate_content f0 food)
+set predicate (crate_content f1 food)
+set predicate (crate_content f2 food)
+set predicate (crate_content m3 medicine)
+set predicate (crate_content m4 medicine)
+set predicate (crate_content m5 medicine)
+
+set goal (and (doesnt_need gianmarco food) (doesnt_need gianmarco medicine) (doesnt_need wamiq food) (doesnt_need wamiq medicine) (doesnt_need federico food) (doesnt_need federico medicine) (doesnt_need alice food) (doesnt_need alice medicine) (doesnt_need zihadul food) (doesnt_need zihadul medicine) (doesnt_need matteo food) (doesnt_need matteo medicine))
