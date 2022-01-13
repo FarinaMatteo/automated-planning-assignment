@@ -1,5 +1,5 @@
 (define (domain assignment-environment)
-    (:requirements :typing :equality :negative-preconditions :existential-preconditions :fluents :disjunctive-preconditions)
+    (:requirements :typing :equality :negative-preconditions :fluents :disjunctive-preconditions)
     (:types
         place - object
         loc warehouse - place
