@@ -1,5 +1,0 @@
-[plansys2_node-1] ===> [(person_at gianmarco l7)]
-[plansys2_node-1] ===> [(crate_content c3 medicine)]
-[plansys2_node-1] ===> [(needs gianmarco medicine)]
-[plansys2_node-1] plansys2_node: /home/teofa/plansys2_ws/src/ros2_planning_system/plansys2_executor/src/plansys2_executor/BTBuilder.cpp:521: plansys2::Graph::Ptr plansys2::BTBuilder::get_graph(const Plan&): Assertion `at_start_requirements.empty()' failed.
-[ERROR] [plansys2_node-1]: process has died [pid 62863, exit code -6, cmd '/home/teofa/plansys2_ws/install/plansys2_bringup/lib/plansys2_bringup/plansys2_node --ros-args -r __ns:=/ --params-file /tmp/launch_params_tk86yj37 --params-file /home/teofa/plansys2_ws/install/plansys2_bringup/share/plansys2_bringup/params/plansys2_params.yaml'].
