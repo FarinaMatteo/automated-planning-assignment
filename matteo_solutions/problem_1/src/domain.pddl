@@ -1,5 +1,5 @@
 (define (domain injured-people-environment)
-    (:requirements :typing :equality :negative-preconditions :existential-preconditions :disjunctive-preconditions)
+    (:requirements :typing :equality :negative-preconditions :disjunctive-preconditions)
     (:types
         loc - object
         person - object
