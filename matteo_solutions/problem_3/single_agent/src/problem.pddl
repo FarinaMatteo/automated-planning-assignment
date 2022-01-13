@@ -1,14 +1,13 @@
 (define (problem problem_three) (:domain assignment-environment)
 (:objects 
-    ; let's suppose 11 random locations directly connected to each other
+    ; let's suppose 10 random locations directly connected to each other
     l0 l1 l2 l3 l4 l5 l6 l7 l8 l9 - loc
-    ; let's suppose 3 people 
     alice wamiq zihadul matteo federico gianmarco - person
     ; let's suppose 6 crates, 3 containing food and 3 containing medicine (subtypes of crate!)
     f0 f1 f2 m3 m4 m5 - crate 
     ; unique carrier object
     carr - carrier
-    ; define quantities between 1 to 4
+    ; define quantities from 1 to 4
     n1 n2 n3 n4 - quantity
     ; crate content types for the problem
     food medicine - resource

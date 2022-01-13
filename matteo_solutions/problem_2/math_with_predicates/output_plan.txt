@@ -10,7 +10,7 @@
 (unload agent carr f1 federico l7 n2 n1)
 (move_for_delivery agent carr l7 l8)
 (unload agent carr f0 alice l8 n1 n0)
-(move_to_depot agent carr l8)
+(back_to_warehouse agent carr l8 depot)
 (load agent carr m4 depot n0 n1)
 (load agent carr m5 depot n1 n2)
 (move_for_delivery agent carr depot l7)

@@ -31,26 +31,13 @@
         (crates_amount ?c - carrier)
     )
 
-    ; move the robot ?r from location ?src to location ?dst
-    (:action move_to_depot
-        :parameters (?r - robot ?c - carrier ?src - loc)
+    ; move the robot ?r from location ?src to destination warehouse ?dst
+    (:action back_to_warehouse
+        :parameters (?r - robot ?c - carrier ?src - loc ?dst - warehouse)
         :precondition (and
             ; actual action constraints
             (robot_at ?r ?src) (carrier_at ?c ?src)
-            (= (crates_amount ?c) 0)
-        )
-        :effect (and 
-            (not (robot_at ?r ?src)) (not (carrier_at ?c ?src)) ; robot and carrier are not at the source location anymore
-            (robot_at ?r depot) (carrier_at ?c depot); robot and carrier are at the destination location after moving
-        )
-    )
-
-    ; move the robot ?r from location ?src to location ?dst
-    (:action move_for_delivery
-        :parameters (?r - robot ?c - carrier ?src - place ?dst - loc)
-        :precondition (and
-            ; actual action constraints
-            (robot_at ?r ?src) (carrier_at ?c ?src) (not (= ?src ?dst))
+            (= (crates_amount ?c) 0) ; the agent doesn't have to come back until all crates have been delivered!
         )
         :effect (and 
             (not (robot_at ?r ?src)) (not (carrier_at ?c ?src)) ; robot and carrier are not at the source location anymore
@@ -58,16 +45,29 @@
         )
     )
 
-    ; load the crate ?k onto carrier ? with robot ?r at location ?l
+    ; move the robot ?r from place ?src to location ?dst
+    (:action move_for_delivery
+        :parameters (?r - robot ?c - carrier ?src - place ?dst - loc)
+        :precondition (and
+            ; actual action constraints
+            (robot_at ?r ?src) (carrier_at ?c ?src) (not (= ?src ?dst))
+        )
+        :effect (and 
+            (not (robot_at ?r ?src)) (not (carrier_at ?c ?src)) ; robot and carrier are not at the source place anymore
+            (robot_at ?r ?dst) (carrier_at ?c ?dst); robot and carrier are at the destination location after moving
+        )
+    )
+
+    ; load the crate ?k onto carrier ?c with robot ?r at warehouse ?wh
     (:action load 
-        :parameters (?r - robot ?c - carrier ?k - crate ?l - warehouse)
+        :parameters (?r - robot ?c - carrier ?k - crate ?wh - warehouse)
         :precondition (and 
-            (robot_at ?r ?l) (crate_at ?k ?l) (carrier_at ?c ?l); location constraints
+            (robot_at ?r ?wh) (crate_at ?k ?wh) (carrier_at ?c ?wh); location constraints
             (not (carrying ?c ?k)) (< (crates_amount ?c) 4) ; ensure the carrier can load the crate
         )
         :effect (and 
             (carrying ?c ?k)
-            (not (crate_at ?k ?l))
+            (not (crate_at ?k ?wh))
             (increase (crates_amount ?c) 1) ; the carrier is actually holding the crate, so it is not free anymore
         )
     )
@@ -76,7 +76,7 @@
     (:action unload
         :parameters (?r - robot ?c - carrier ?k - crate ?p - person ?l - loc)
         :precondition (and 
-            (robot_at ?r ?l) (person_at ?p ?l) (carrier_at ?c ?l); location constraints
+            (robot_at ?r ?l) (person_at ?p ?l) (carrier_at ?c ?l) ; location constraints
             (carrying ?c ?k) ; make sure we are not trying to unload a crate we don't have!
             (> (crates_amount ?c) 0)
         )

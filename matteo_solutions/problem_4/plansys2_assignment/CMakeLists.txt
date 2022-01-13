@@ -17,8 +17,8 @@ set(dependencies
     plansys2_executor
 )
 
-add_executable(move_to_depot_action_node src/move_to_depot_action_node.cpp)
-ament_target_dependencies(move_to_depot_action_node ${dependencies})
+add_executable(back_to_warehouse_action_node src/back_to_warehouse_action_node.cpp)
+ament_target_dependencies(back_to_warehouse_action_node ${dependencies})
 
 add_executable(move_for_delivery_action_node src/move_for_delivery_action_node.cpp)
 ament_target_dependencies(move_for_delivery_action_node ${dependencies})
@@ -32,7 +32,7 @@ ament_target_dependencies(unload_action_node ${dependencies})
 install(DIRECTORY launch pddl DESTINATION share/${PROJECT_NAME})
 
 install(TARGETS
-  move_to_depot_action_node
+  back_to_warehouse_action_node
   move_for_delivery_action_node
   load_action_node
   unload_action_node

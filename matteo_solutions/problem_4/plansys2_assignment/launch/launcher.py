@@ -47,10 +47,10 @@ def generate_launch_description():
           }.items())
 
     # Specify the actions
-    move_to_depot_cmd = Node(
+    back_to_warehouse_cmd = Node(
         package='plansys2_assignment',
-        executable='move_to_depot_action_node',
-        name='move_to_depot_action_node',
+        executable='back_to_warehouse_action_node',
+        name='back_to_warehouse_action_node',
         namespace=namespace,
         output='screen',
         parameters=[])
@@ -88,7 +88,7 @@ def generate_launch_description():
 
     # Declare the launch options
     ld.add_action(plansys2_cmd)
-    ld.add_action(move_to_depot_cmd)
+    ld.add_action(back_to_warehouse_cmd)
     ld.add_action(move_for_delivery_cmd)
     ld.add_action(load_cmd)
     ld.add_action(unload_cmd)

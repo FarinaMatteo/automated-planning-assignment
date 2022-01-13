@@ -42,9 +42,9 @@
     )
 
 
-    ; move a carrier using a robot from src location to dst location
-    (:durative-action move_to_depot
-        :parameters (?r - robot ?c - carrier ?src - loc)
+    ; move a carrier using a robot from src location to dst warehouse
+    (:durative-action back_to_warehouse
+        :parameters (?r - robot ?c - carrier ?src - loc ?dst - warehouse)
         :duration ( = ?duration 5)
         :condition (and 
             (at start (robot_at ?r ?src))
@@ -55,8 +55,8 @@
         :effect (and 
             (at start (not (robot_at ?r ?src)))
             (at start (not (carrier_at ?c ?src)))
-            (at end (robot_at ?r depot))
-            (at end (carrier_at ?c depot))
+            (at end (robot_at ?r ?dst))
+            (at end (carrier_at ?c ?dst))
         )
     )
 
@@ -77,14 +77,14 @@
         )
     )
 
-    ; load crate k onto carrier c with robot r at warehouse l
+    ; load crate k onto carrier c with robot r at warehouse wh
     (:durative-action load
-        :parameters (?r - robot ?c - carrier ?k - crate ?l - warehouse ?start_q ?end_q - quantity)
+        :parameters (?r - robot ?c - carrier ?k - crate ?wh - warehouse ?start_q ?end_q - quantity)
         :duration ( = ?duration 2)
         :condition (and 
-            (at start (robot_at ?r ?l))
-            (at start (carrier_at ?c ?l))
-            (at start (crate_at ?k ?l))
+            (at start (robot_at ?r ?wh))
+            (at start (carrier_at ?c ?wh))
+            (at start (crate_at ?k ?wh))
             (at start (inc ?start_q ?end_q))
             (at start (crates_amount ?c ?start_q))
             (at start (free ?r))
@@ -93,7 +93,7 @@
         )
         :effect (and 
             (at start (not (free ?r)))
-            (at end (not (crate_at ?k ?l)))
+            (at end (not (crate_at ?k ?wh)))
             (at end (carrying ?c ?k))
             (at end (crates_amount ?c ?end_q))
             (at end (not (crates_amount ?c ?start_q)))

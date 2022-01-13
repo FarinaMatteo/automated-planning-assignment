@@ -2,7 +2,6 @@
 (:objects 
     ; let's suppose 11 random locations directly connected to each other
     depot l0 l1 l2 l3 l4 l5 l6 l7 l8 l9 - loc
-    ; let's suppose 3 people 
     alice wamiq zihadul matteo - person
     ; let's suppose 6 crates, 3 containing food and 3 containing medicine (subtypes of crate!)
     f0 f1 f2 - food

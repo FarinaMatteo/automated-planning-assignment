@@ -22,11 +22,11 @@
 
 using namespace std::chrono_literals;
 
-class MoveToDepotAction : public plansys2::ActionExecutorClient
+class BackToWarehouseAction : public plansys2::ActionExecutorClient
 {
 public:
-  MoveToDepotAction()
-  : plansys2::ActionExecutorClient("move_to_depot", 500ms)
+  BackToWarehouseAction()
+  : plansys2::ActionExecutorClient("back_to_warehouse", 500ms)
   {
     progress_ = 0.0;
   }
@@ -36,9 +36,9 @@ private:
   {
     if (progress_ < 1.0) {
       progress_ += 0.10;
-      send_feedback(progress_, "move_to_depot running");
+      send_feedback(progress_, "back_to_warehouse running");
     } else {
-      finish(true, 1.0, "move_to_depot completed");
+      finish(true, 1.0, "back_to_warehouse completed");
 
       progress_ = 0.0;
       std::cout << std::endl;
@@ -65,9 +65,9 @@ private:
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
-  auto node = std::make_shared<MoveToDepotAction>();
+  auto node = std::make_shared<BackToWarehouseAction>();
 
-  node->set_parameter(rclcpp::Parameter("action_name", "move_to_depot"));
+  node->set_parameter(rclcpp::Parameter("action_name", "back_to_warehouse"));
   node->trigger_transition(lifecycle_msgs::msg::Transition::TRANSITION_CONFIGURE);
 
   rclcpp::spin(node->get_node_base_interface());

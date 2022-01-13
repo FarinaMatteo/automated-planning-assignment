@@ -27,14 +27,14 @@
         (carrying ?c - carrier ?k - crate) ; crate ?k is contained in carrier ?c
 
         ; mathematical predicates in order to avoid numeric fluents
-        (inc ?n ?another_number) ; should be true if n+1 = another_number
-        (dec ?n ?another_number) ; should be true if n-1 = another_number
+        (inc ?n ?another_number - quantity) ; should be true if n+1 = another_number
+        (dec ?n ?another_number - quantity) ; should be true if n-1 = another_number
         (crates_amount ?c - carrier ?q - quantity) ; should be true if the carrier is holding 'quantity' crates
     )
 
-    ; move the robot ?r from location ?src to location ?dst
-    (:action move_to_depot
-        :parameters (?r - robot ?c - carrier ?src - loc)
+    ; move the robot ?r from location ?src back to a warehouse in order to load new crates
+    (:action back_to_warehouse
+        :parameters (?r - robot ?c - carrier ?src - loc ?dst - warehouse)
         :precondition (and
             ; actual action constraints
             (robot_at ?r ?src) (carrier_at ?c ?src)
@@ -43,11 +43,11 @@
         )
         :effect (and 
             (not (robot_at ?r ?src)) (not (carrier_at ?c ?src)) ; robot and carrier are not at the source location anymore
-            (robot_at ?r depot) (carrier_at ?c depot) ; robot and carrier are at the destination location after moving
+            (robot_at ?r ?dst) (carrier_at ?c ?dst) ; robot and carrier are at the deposit after moving
         )
     )
 
-    ; move the robot ?r from location ?src to location ?dst
+    ; move the robot ?r from any place ?src to location ?dst
     (:action move_for_delivery
         :parameters (?r - robot ?c - carrier ?src - place ?dst - loc)
         :precondition (and
@@ -56,29 +56,31 @@
             (not (crates_amount ?c n0))
         )
         :effect (and 
-            (not (robot_at ?r ?src)) (not (carrier_at ?c ?src)) ; robot and carrier are not at the source location anymore
+            (not (robot_at ?r ?src)) (not (carrier_at ?c ?src)) ; robot and carrier are not at the source place anymore
             (robot_at ?r ?dst) (carrier_at ?c ?dst); robot and carrier are at the destination location after moving
         )
     )
 
-    ; load the ?end_q crate ?k onto carrier ?k which already has ?start_q crates with robot ?r at location ?l 
+    ; load the ?end_q crate ?k onto carrier ?c which already has ?start_q crates with robot ?r at warehouse ?wh 
+    ; beware that crates can only be loaded at warehouses, not at any place
     (:action load 
-        :parameters (?r - robot ?c - carrier ?k - crate ?l - warehouse ?start_q ?end_q - quantity)
+        :parameters (?r - robot ?c - carrier ?k - crate ?wh - warehouse ?start_q ?end_q - quantity)
         :precondition (and 
-            (robot_at ?r ?l) (crate_at ?k ?l) (carrier_at ?c ?l) ; location constraints
+            (robot_at ?r ?wh) (crate_at ?k ?wh) (carrier_at ?c ?wh) ; location constraints
             (not (carrying ?c ?k)) ; ensure the carrier can load the crate
             (inc ?start_q ?end_q) ; ensure this is satisfying the mathematical constraint src_q+1=dst_q
             (crates_amount ?c ?start_q) ; ensure the crate has exactly ?start_q crates before performing this action
         )
         :effect (and 
             (carrying ?c ?k) ; the carrier is actually holding the crate
-            (not (crate_at ?k ?l))
+            (not (crate_at ?k ?wh))
             (crates_amount ?c ?end_q) ; now we have end_q crates rather than start_q crates inside the carrier
             (not (crates_amount ?c ?start_q))
         )
     )
 
     ; deliver the content of crate ?k to person ?p from robot ?r when at the same location ?l
+    ; beware that crates can only be unloaded at locations, since no injured people can be at warehouses
     (:action unload
         :parameters (?r - robot ?c - carrier ?k - crate ?p - person ?l - loc ?start_q ?end_q - quantity)
         :precondition (and 
