@@ -130,3 +130,6 @@ dmypy.json
 
 # vscode annoying config files
 .vscode
+
+# zip archives (project delivery)
+*.zip
