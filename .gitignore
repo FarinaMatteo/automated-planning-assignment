@@ -133,3 +133,6 @@ dmypy.json
 
 # zip archives (project delivery)
 *.zip
+
+# local log files for the plansys2 assignment
+problem_4/plansys2_assignment/log
