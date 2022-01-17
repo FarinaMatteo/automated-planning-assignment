@@ -15,13 +15,20 @@ You can install it by running the following:
 $ pip3 install planutils
 ```
 
-In order to install and run the content of _problem\_4/plansys2\_assignment_ you will need the `colcon` tool and the 
-__Robotic Operating System__ infrastructure (ros2 in short). To install colcon on Ubuntu 20.04, run:  
+In order to install and run the content of _problem\_4/plansys2\_assignment_ you will need the `colcon` tool,
+__Robotic Operating System__ infrastructure (ROS2 in short) and the ROS2 Planning System.  
+To install colcon on Ubuntu 20.04, run:  
 ```
 $ curl -s https://packagecloud.io/install/repositories/dirk-thomas/colcon/script.deb.sh | sudo bash  
 $ sudo apt install python3-colcon-common-extensions
 ```  
-In order to install the ros2 infrastructure, please refer to the [official documentation](https://docs.ros.org/en/foxy/Installation.html). The source code is tested under the __Foxy__ ros2 release.  
+In order to install the ROS2 infrastructure, please refer to the [official documentation](https://docs.ros.org/en/foxy/Installation.html). The source code is tested under the __Foxy__ ROS2 release. Then, build the ROS2 Planning System from source following [these docs](https://intelligentroboticslab.gsyc.urjc.es/ros2_planning_system.github.io/build_instructions/index.html).  
+  
+Once all of the dependencies have been installed, run the following and follow the instructions on your terminal:  
+```
+    $ cd problem_4/plansys2_assignment
+    $ ./install.sh
+```
 
 ## Repo content  
 The repository has four folders (_problem\_1_ to _problem\_4_) each containing the
@@ -34,4 +41,5 @@ domain-problem pair in the corresponding __src__ folder;
 In case multiple solutions are provided for a given problem, those will be at __problem\_xx/solution\_name__, the folder
 being structured as presented above. The __problem\_4__ folder differs since it contains an implementation of the solution 
 to __problem\_3__ to be executed within the __plansys2\_infrastructure__.  
+  
 Additional details on the implementations are illustrated in the "APTP_report.pdf" file.
