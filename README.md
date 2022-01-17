@@ -26,8 +26,8 @@ In order to install the ROS2 infrastructure, please refer to the [official docum
   
 Once all of the dependencies have been installed, run the following and follow the instructions on your terminal:  
 ```
-    $ cd problem_4/plansys2_assignment
-    $ ./install.sh
+$ cd problem_4/plansys2_assignment
+$ ./install.sh
 ```
 
 ## Repo content  
